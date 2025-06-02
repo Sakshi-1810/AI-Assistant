@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Careers</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color:rgb(238, 232, 232);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #ffffff;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .career-container {
+      width: 100%;
+      max-width: 500px;
+      height: 90vh;
+      background:rgb(240, 233, 239);
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 0 30px rgba(0, 255, 170, 0.2);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 28px;
+      color:rgb(25, 27, 28);
+      margin-bottom: 20px;
+      text-shadow: 0 0 6px rgba(249, 248, 248, 0.93);
+    }
+
+    form {
+      margin-bottom: 25px;
+    }
+
+    label {
+      font-size: 16px;
+      color: #000;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    input[type="file"] {
+      background-color: #ffffff;  /* ✅ White background */
+      color: #000000; 
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #444;
+      width: 100%;
+    }
+
+    button {
+      padding: 12px 16px;
+      font-size: 16px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background-color: #00aaff;
+      color: #000;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0091cc;
+    }
+
+    .flash {
+      background-color: #123456;
+      color: #dff0d8;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    .tab-container {
+      margin-top: 20px;
+    }
+
+    .tab-buttons {
+      display: flex;
+      margin-bottom: 10px;
+    }
+
+    .tab-buttons button {
+      flex: 1;
+      padding: 10px;
+      cursor: pointer;
+      background-color: #333;
+      border: none;
+      border-radius: 6px 6px 0 0;
+      color: #ccc;
+      font-weight: bold;
+    }
+
+    .tab-buttons button.active {
+      background-color: #00eaff;
+      color: #000;
+    }
+
+    .tab-content {
+      background-color: #111;
+      border-radius: 0 0 6px 6px;
+      padding: 16px;
+      color: #a7e4f7;
+      font-size: 16px;
+      line-height: 1.6;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .tab-content pre {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-family: 'Courier New', monospace;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: #444;
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+  </style>
+  <script>
+    function showTab(tabName) {
+      document.querySelectorAll(".tab-content").forEach(tab => tab.style.display = "none");
+      document.querySelectorAll(".tab-buttons button").forEach(btn => btn.classList.remove("active"));
+      document.getElementById(tabName).style.display = "block";
+      document.getElementById(tabName + "-btn").classList.add("active");
+    }
+  </script>
+</head>
+<body>
+  <div class="career-container">
+    <h2>🚀 Explore Your Career</h2>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for msg in messages %}
+          <div class="flash">{{ msg }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="post" enctype="multipart/form-data">
+      <label><strong>Upload Your Resume:</strong></label>
+      <input type="file" name="resume" accept=".pdf,.doc,.docx" required>
+      <button type="submit">Analyze</button>
+    </form>
+
+    {% if suggestions %}
+      <div class="tab-container">
+        <div class="tab-buttons">
+          <button id="career-tab-btn" class="active" onclick="showTab('career-tab')">🔍 Career Suggestions</button>
+        </div>
+        <div id="career-tab" class="tab-content" style="display: block;">
+          {% if suggestions == "There are currently no openings that match your skills" %}
+            <p><strong>⚠️ {{ suggestions }}</strong></p>
+          {% else %}
+            <pre>{{ suggestions }}</pre>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</body>
+</html>

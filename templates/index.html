@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Assistant</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background-color: #f5f9fd;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      height: 100vh;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .chat-container {
+      width: 100%;
+      max-width: 500px;
+      height: 100vh;
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.06);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .chat-header h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 26px;
+      color: #222;
+    }
+
+    .logo-img {
+      height: 45px;
+      vertical-align: middle;
+      margin-right: 0;
+      border-radius: 4px;
+    }
+
+    .new-chat-btn {
+      font-size: 14px;
+      padding: 8px 12px;
+      background-color:rgb(78, 95, 205);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .new-chat-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .chat-box {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 10px;
+      background: #f0f2f7;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .message {
+      padding: 10px 14px;
+      border-radius: 12px;
+      max-width: 70%;
+      white-space: pre-wrap;
+    }
+
+    .user-message {
+      background: linear-gradient(to right, #e0e4fc, #f8e6fa);
+      color: #000;
+      align-self: flex-end;
+      border: 1px solid #d0d0ff;
+      word-break: break-word;
+    }
+
+    
+    .bot-message {
+      background:rgb(246, 249, 248);
+      color: #000;
+      align-self: flex-start;
+      border: 1px solidrgb(243, 213, 241);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      word-break: break-word;
+    }
+
+    .chat-form {
+      display: flex;
+      gap: 10px;
+      position: relative;
+    }
+
+    input[type="text"] {
+      flex-grow: 1;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      color: #000;
+    }
+
+    input[type="text"]::placeholder {
+      color: #888;
+    }
+
+    #suggestionsBox {
+      position: absolute;
+      top: 45px;
+      left: 0;
+      width: calc(100% - 110px);
+      background-color: #fff;
+      color: #000;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      z-index: 1000;
+      display: none;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    #suggestionsBox li {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+    }
+
+    #suggestionsBox li:hover {
+      background-color: #f2f2f2;
+    }
+
+    button {
+      padding: 12px;
+      font-size: 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .send-btn {
+      background: #007bff;
+      color: white;
+      font-size: 20px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      line-height: 1;
+    }
+
+    .send-btn:hover {
+      background: #0056b3;
+    }
+
+    .loading-spinner {
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid #ffffff;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .career-link {
+      display: inline-block;
+      margin-top: 15px;
+      font-size: 14px;
+      background: transparent;
+      color: #007bff;
+      text-decoration: none;
+      padding: 6px 10px;
+      border: none;
+      font-weight: normal;
+      text-align: left;
+      float: left;
+    }
+
+    .career-link:hover {
+      background:rgb(200, 196, 243);
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: #aaa;
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <!-- Chat Header -->
+    <div class="chat-header">
+      <h2><img src="/static/logo.png" alt="Logo" class="logo-img"> Webanix AI Assistant</h2>
+      <form method="post" style="margin: 0;">
+        <button type="submit" name="action" value="clear" class="new-chat-btn" formnovalidate>+ New Chat</button>
+      </form>
+    </div>
+
+    <!-- Chat Box -->
+    <div class="chat-box" id="chatBox">
+      {% if history|length == 0 %}
+        <div class="message bot-message"><strong>AI:</strong> Hi there!  How can WEBaniX Solutions help your business thrive today?  Are you interested in our services or products?</div>
+      {% else %}
+        {% for msg in history %}
+          {% if msg[0] == 'User' %}
+            <div class="message user-message"><strong>You:</strong> {{ msg[1] }}</div>
+          {% elif msg[0] == 'Assistant' %}
+            <div class="message bot-message"><strong>AI:</strong> <span>{{ msg[1]|urlize(target="_blank")|safe }}</span></div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <!-- Chat Form -->
+    <form class="chat-form" method="post">
+      <input type="text" name="question" id="questionInput" placeholder="Ask me anything..." required autocomplete="off">
+      <ul id="suggestionsBox"></ul>
+      <button type="submit" name="action" value="ask" class="send-btn" title="Send" id="sendBtn">
+        <span id="sendIcon">&#10148;</span>
+      </button>
+    </form>
+
+    <!-- Career Link -->
+    <a class="career-link" href="/careers">🚀 Explore Career Options</a>
+  </div>
+
+  <script>
+    const questionInput = document.getElementById('questionInput');
+    const suggestionsBox = document.getElementById('suggestionsBox');
+    const chatBox = document.getElementById('chatBox');
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    const sendBtn = document.getElementById("sendBtn");
+    const sendIcon = document.getElementById("sendIcon");
+
+    document.querySelector(".chat-form").addEventListener("submit", function () {
+      // Add loading spinner
+      sendIcon.innerHTML = '';
+      const spinner = document.createElement('span');
+      spinner.className = 'loading-spinner';
+      sendIcon.appendChild(spinner);
+
+      sendBtn.disabled = true;
+    });
+
+    questionInput.addEventListener('input', () => {
+      const val = questionInput.value.trim();
+      if (val.length < 6) {
+        suggestionsBox.innerHTML = '';
+        suggestionsBox.style.display = 'none';
+        return;
+      }
+
+      fetch(`/suggest?q=${encodeURIComponent(val)}`)
+        .then(res => res.json())
+        .then(data => {
+          suggestionsBox.innerHTML = '';
+          if (data.length === 0) {
+            suggestionsBox.style.display = 'none';
+            return;
+          }
+
+          data.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = item;
+            li.onclick = () => {
+              questionInput.value = item;
+              suggestionsBox.innerHTML = '';
+              suggestionsBox.style.display = 'none';
+            };
+            suggestionsBox.appendChild(li);
+          });
+
+          suggestionsBox.style.display = 'block';
+        });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!suggestionsBox.contains(e.target) && e.target !== questionInput) {
+        suggestionsBox.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
