@@ -27,7 +27,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-DOMAIN = "https://www.woodenstreet.com/"
+DOMAIN = "your_domain_link"
 suggestion_keywords = []
 
 
