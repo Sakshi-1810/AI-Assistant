@@ -3,16 +3,16 @@
 This project is a local AI-powered resume analysis tool. It uses the **Gemini API** to:
 
 - 📝 Extract structured key details from resumes (Name, Email, Skills, Experience, etc.)
-- 🎯 Suggest career options that match both the user's skills and Webanix's technologies
+- 🎯 Suggest career options that match both the user's skills and technologies
 
 ---
 
 ## 📁 Folder Structure
 
 ```
-webanix-resume-ai/
+resume
 ├── uploads/                  # Put your resume files (.pdf or .docx) here
-├── analyze_webanix_resume.py # Main Python script (terminal-based)
+├── analyze_resume.py # Main Python script (terminal-based)
 ├── README.md
 ```
 
@@ -22,7 +22,7 @@ webanix-resume-ai/
 
 - Python 3.8+
 - Google Gemini API access and key
-- Internet connection (to scrape the Webanix website and access Gemini)
+- Internet connection (to scrape the website and access Gemini)
 
 ### 📦 Install Python dependencies:
 
@@ -39,12 +39,12 @@ Place your latest resume in the `uploads/` folder (as `.pdf` or `.docx`).
 Then run:
 
 ```bash
-python analyze_webanix_resume.py
+python analyze_resume.py
 ```
 
 ### ✅ Output:
 - 📋 JSON with key resume details (Name, Skills, Experience, etc.)
-- 🎯 AI-suggested job roles based on Webanix's tech stack
+- 🎯 AI-suggested job roles based on tech stack
 
 ---
 
@@ -54,11 +54,11 @@ python analyze_webanix_resume.py
 2. Extracts text using `pdfplumber` or `python-docx`.
 3. Sends it to the **Gemini model** via API with 2 prompts:
    - One to extract structured JSON resume data
-   - One to suggest relevant job roles (based on Webanix’s tech stack)
+   - One to suggest relevant job roles (based on tech stack)
 
 ---
 
-## 🛠️ Technologies Used by Webanix (as per careers page)
+## 🛠️ Technologies (as per careers page)
 
 ```text
 React.js, Angular, Node.js, Python, React Native, Android, PHP, DevOps,
