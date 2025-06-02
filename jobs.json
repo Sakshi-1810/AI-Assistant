@@ -1,0 +1,51 @@
+[
+    {
+      "id": "job101",
+      "title": "Frontend Developer",
+      "skills_required": ["HTML", "CSS", "JavaScript", "React", "TailwindCSS"],
+      "experience_level": "Mid-Level",
+      "location": "Udaipur",
+      "description": "Join our dynamic frontend team to build responsive and modern web interfaces using React and TailwindCSS."
+    },
+    {
+      "id": "job102",
+      "title": "Backend Developer",
+      "skills_required": ["Node.js", "Express", "MongoDB", "REST APIs"],
+      "experience_level": "Senior",
+      "location": "Udaipur",
+      "description": "We're looking for a backend engineer to design and maintain scalable APIs and server-side logic using Node.js and MongoDB."
+    },
+    {
+      "id": "job103",
+      "title": "UI/UX Designer",
+      "skills_required": ["Figma", "Adobe XD", "Prototyping", "User Research"],
+      "experience_level": "Junior",
+      "location": "Udaipur",
+      "description": "Design intuitive user experiences and beautiful interfaces for our products. Experience with Figma and user-centric design is a plus."
+    },
+    {
+      "id": "job104",
+      "title": "Full Stack Developer",
+      "skills_required": ["React", "Node.js", "SQL", "GraphQL", "Docker"],
+      "experience_level": "Senior",
+      "location": "Udaipur",
+      "description": "Looking for a full stack wizard to work across our frontend and backend systems. Docker knowledge is highly appreciated."
+    },
+    {
+      "id": "job105",
+      "title": "DevOps Engineer",
+      "skills_required": ["AWS", "CI/CD", "Docker", "Kubernetes", "Monitoring Tools"],
+      "experience_level": "Mid-Level",
+      "location": "Udaipur",
+      "description": "Help us scale and automate infrastructure with CI/CD pipelines, cloud deployments, and modern DevOps tools."
+    },
+    {
+      "id": "job106",
+      "title": "QA Engineer",
+      "skills_required": ["Manual Testing", "Selenium", "Postman", "Bug Reporting", "JIRA"],
+      "experience_level": "Junior",
+      "location": "Udaipur",
+      "description": "Work with developers to test, report, and improve our applications. Experience in automation testing is a bonus."
+    }
+  ]
+  
